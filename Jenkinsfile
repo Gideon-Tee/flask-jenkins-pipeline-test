@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo "Test the application before building"
                 sh 'python3 -m pytest'
-                sh 'docker build -t flask-hello-world:${params.BUILD_VERSION}'
+                sh 'docker build -t flask-hello-world:${BUILD_VERSION}'
             }
         }
     }
