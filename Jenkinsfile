@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'BUILD_VERSION', defaultValue: 'latest', description: 'Enter the build verison for the image')
+    }
+
     stages {
         stage("Checkout") {
            steps {
@@ -10,9 +14,11 @@ pipeline {
            }
         }
 
-        stage("Setup environment") {
+        stage("Build") {
             steps {
-                sh 'pip install -r requirements.txt'
+                echo "Test the application before building"
+                sh 'python3 -m pytest'
+                sh 'docker build -t flask-hello-world:${params.BUILD_VERSION}'
             }
         }
     }
